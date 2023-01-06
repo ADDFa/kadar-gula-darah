@@ -16,5 +16,5 @@ const starCountRef = ref(database, 'Glukosa(Mgdl)')
 onValue(starCountRef, snapshot => {
     const data = snapshot.val()
 
-    document.getElementById('realtime-glukosa').innerText = data
+    document.getElementById('realtime-glukosa').innerText = `${Math.ceil(data)} mg/dl`
 })
