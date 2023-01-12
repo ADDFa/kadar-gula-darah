@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",(()=>{const e=document.querySelector(`[href="${location.pathname}"]`);e&&e.classList.add("active")}));
