@@ -15,7 +15,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        return view('messages.index');
+        return view('messages.index', ['title'  => 'Obrolan | Kadar Gula Darah']);
     }
 
     /**

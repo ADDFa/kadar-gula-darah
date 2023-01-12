@@ -41,7 +41,7 @@ class Auth extends Controller
     {
         $request->validate([
             'name'      => 'required|max:50',
-            'email'     => 'required|email:rfc,dns|max:50',
+            'email'     => 'required|email:rfc,dns|max:50|unique:users,email',
             'password'  => 'required|between:8,255'
         ]);
 

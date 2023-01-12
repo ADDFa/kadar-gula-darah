@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SugarLevel;
 use App\Http\Middleware\Auth as MiddlewareAuth;
 use App\Http\Middleware\Admin;
@@ -31,4 +32,6 @@ Route::middleware(MiddlewareAuth::class)->controller(SugarLevel::class)->group(f
     Route::get('all/sugar', 'showAll')->middleware(Admin::class);
 });
 
-// Route::
+Route::middleware(MiddlewareAuth::class)->controller(MessageController::class)->group(function () {
+    Route::get('/chatting', 'index');
+});
