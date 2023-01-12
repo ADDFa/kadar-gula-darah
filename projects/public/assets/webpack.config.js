@@ -2,9 +2,10 @@ const path = require('path')
 
 module.exports = {
     mode: 'production',
-    entry: './js/index.js',
+    entry: './js/partials/navbar.js',
     output: {
         path: path.resolve(__dirname, 'js'),
-        filename: 'index.bundle.js'
-    }
+        filename: 'template.js'
+    },
+    watch: true
 }

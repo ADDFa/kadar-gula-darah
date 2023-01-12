@@ -52,10 +52,14 @@ class SugarLevel extends Controller
      * @param  \App\Models\SugarLevels  $sugarLevels
      * @return \Illuminate\Http\Response
      */
-    public function showAll()
+    public function showAll(Request $request)
     {
+        $sugarLevels = SugarLevels::select()->limit(100);
+
+        if (!is_null($request->s)) $sugarLevels->where('patient_name', 'like', "%{$request->s}%");
+
         $data = [
-            'sugarLevels'   => SugarLevels::all()
+            'sugarLevels'   => $sugarLevels->get()
         ];
 
         return view('sugar.all', $data);
