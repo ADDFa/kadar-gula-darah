@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kadar Gula Darah</title>
+    <title>
+        {{ $title }}
+    </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
@@ -21,14 +23,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Home</a>
+                        <a class="nav-link" aria-current="page" href="/sugar">Home</a>
                     </li>
+                    @if (session('role') === 'admin')
                     <li class="nav-item">
                         <a class="nav-link" href="/all/sugar">Data Pasien</a>
+                    </li>
+                    @endif
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/chatting">Obrolan</a>
                     </li>
                 </ul>
 
                 @yield('search')
+
+                @if (session('login'))
+                <a href="/logout" class="btn btn-warning">Keluar</a>
+                @endif
             </div>
         </div>
     </nav>

@@ -14,7 +14,9 @@ class Auth extends Controller
      */
     public function index()
     {
-        return view('login');
+        if (session('login')) return redirect()->back();
+
+        return view('login', ['title'   => 'Masuk | Kadar Gula Darah']);
     }
 
     /**
@@ -24,7 +26,9 @@ class Auth extends Controller
      */
     public function create()
     {
-        return view('auth.registration');
+        if (session('login')) return redirect()->back();
+
+        return view('auth.registration', ['title'   => 'Registrasi | Kadar Gula Darah']);
     }
 
     /**
@@ -35,10 +39,17 @@ class Auth extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name'      => 'required|max:50',
+            'email'     => 'required|email:rfc,dns|max:50',
+            'password'  => 'required|between:8,255'
+        ]);
+
+
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = password_hash($request->password, PASSWORD_DEFAULT);
         $user->save();
 
         return redirect()->to('/');
@@ -54,7 +65,7 @@ class Auth extends Controller
     {
         $user = User::where('email', $email)->first();
         if (!$user) return false;
-        return $password === $user->password ? $user : false;
+        return password_verify($password, $user->password) ? $user : false;
     }
 
     public function login(Request $request)
@@ -70,6 +81,7 @@ class Auth extends Controller
             'user_id'   => $user->id,
             'email'     => $user->email,
             'name'      => $user->name,
+            'role'      => $user->role,
             'login'     => true
         ]);
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\SugarLevel;
 use App\Http\Middleware\Auth as MiddlewareAuth;
+use App\Http\Middleware\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +17,18 @@ use App\Http\Middleware\Auth as MiddlewareAuth;
 |
 */
 
-// Route::get('/', [Auth::class, 'login']);
-// Route::post('/', [Auth::class, 'entry']);
+Route::controller(Auth::class)->group(function () {
+    Route::get('', 'index');
+    Route::post('', 'login');
+    Route::get('registration', 'create');
+    Route::post('registration', 'store');
+    Route::get('logout', 'logout');
+});
 
-Route::resource('/', Auth::class);
-Route::post('/login', [Auth::class, 'login']);
-Route::get('/logout', [Auth::class, 'logout']);
-Route::resource('sugar', SugarLevel::class, [
-    'middleware'    => MiddlewareAuth::class
-]);
-Route::get('all/sugar', [SugarLevel::class, 'showAll']);
+Route::middleware(MiddlewareAuth::class)->controller(SugarLevel::class)->group(function () {
+    Route::get('sugar', 'index');
+    Route::post('sugar', 'store');
+    Route::get('all/sugar', 'showAll')->middleware(Admin::class);
+});
+
+// Route::

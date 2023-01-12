@@ -13,7 +13,7 @@
         <h1 class="text-center fw-bold mb-3">Login</h1>
 
         <div class="col-lg-10 mx-auto">
-            <form action="/login" method="POST">
+            <form action="" method="POST">
                 @csrf
 
                 <label class="text-center w-100 mb-3">Masuk Untuk Memulai Sesi</label>
@@ -31,7 +31,7 @@
                 </div>
             </form>
 
-            <p>Belum Punya Akun? <a href="/create" class="text-light">Daftar!</a></p>
+            <p>Belum Punya Akun? <a href="/registration" class="text-light">Daftar!</a></p>
         </div>
     </div>
 </div>

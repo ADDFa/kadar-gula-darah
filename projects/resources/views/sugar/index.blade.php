@@ -6,7 +6,7 @@
     <div class="col-lg-4 mx-auto my-5 border border-secondary p-5 rounded-4">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="/sugar">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
                     Ukur Kadar Gula Darah
                 </li>

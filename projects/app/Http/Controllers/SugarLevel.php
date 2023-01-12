@@ -14,17 +14,7 @@ class SugarLevel extends Controller
      */
     public function index()
     {
-        return view('sugar.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // 
+        return view('sugar.index', ['title'   => 'Ukur Kadar Gula Darah']);
     }
 
     /**
@@ -59,43 +49,10 @@ class SugarLevel extends Controller
         if (!is_null($request->s)) $sugarLevels->where('patient_name', 'like', "%{$request->s}%");
 
         $data = [
-            'sugarLevels'   => $sugarLevels->get()
+            'sugarLevels'   => $sugarLevels->get(),
+            'title'         => 'Data Pasien | Kadar Gula Darah'
         ];
 
         return view('sugar.all', $data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\SugarLevels  $sugarLevels
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SugarLevels $sugarLevels)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SugarLevels  $sugarLevels
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SugarLevels $sugarLevels)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SugarLevels  $sugarLevels
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SugarLevels $sugarLevels)
-    {
-        //
     }
 }

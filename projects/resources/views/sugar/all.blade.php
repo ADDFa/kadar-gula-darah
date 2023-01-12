@@ -2,7 +2,7 @@
 
 {{-- navbar --}}
 @section('search')
-<form class="d-flex" role="search">
+<form class="d-flex mx-5" role="search">
     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="s">
     <button class="btn btn-outline-success" type="submit">Search</button>
 </form>
