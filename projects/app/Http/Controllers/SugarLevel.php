@@ -28,6 +28,7 @@ class SugarLevel extends Controller
         $data = $request->all() + [
             'datetime'  => time()
         ];
+
         SugarLevels::create($data);
 
         return redirect()->to('/sugar')->with([

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Admin
+class Doctor
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session('role') !== 'admin') return redirect()->back();
+        if (session('role') !== 'dokter') return redirect()->back();
 
         return $next($request);
     }

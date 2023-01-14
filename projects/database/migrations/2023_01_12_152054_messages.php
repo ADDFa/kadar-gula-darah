@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->text('message');
             $table->string('times', 20);
+            $table->boolean('is_dokter');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('SET NULL');
         });
     }
 

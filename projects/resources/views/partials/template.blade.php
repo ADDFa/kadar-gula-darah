@@ -25,7 +25,7 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/sugar">Home</a>
                     </li>
-                    @if (session('role') === 'admin')
+                    @if (session('role') === 'dokter')
                     <li class="nav-item">
                         <a class="nav-link" href="/all/sugar">Data Pasien</a>
                     </li>
@@ -33,7 +33,7 @@
 
                     @if (session('login'))
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/chatting">Obrolan</a>
+                        <a class="nav-link" aria-current="page" href="/messages">Obrolan</a>
                     </li>
                     @endif
                 </ul>

@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_message', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained('users', 'id');
-            $table->foreignId('message_id')->constrained('messages', 'id');
-            $table->boolean('read')->default(false);
-        });
+        // Schema::create('user_message', function (Blueprint $table) {
+        //     $table->foreignId('user_id')->constrained('users', 'id');
+        //     $table->foreignId('message_id')->constrained('messages', 'id');
+        //     $table->boolean('read')->default(false);
+        // });
     }
 
     /**

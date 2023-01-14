@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
-use App\Http\Requests\UpdateMessageRequest;
 
 class MessageController extends Controller
 {
@@ -15,17 +14,15 @@ class MessageController extends Controller
      */
     public function index()
     {
-        return view('messages.index', ['title'  => 'Obrolan | Kadar Gula Darah']);
-    }
+        $messages = Message::with('user')->where('user_id', session('user_id'))->orWhere('is_dokter', 1)->get();
+        $isDoc = session('role') === 'dokter';
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data = [
+            'title'     => 'Obrolan | Kadar Gula Darah',
+            'messages'  => $isDoc ? Message::with('user')->get() : $messages
+        ];
+
+        return view('messages.index', $data);
     }
 
     /**
@@ -36,51 +33,22 @@ class MessageController extends Controller
      */
     public function store(StoreMessageRequest $request)
     {
-        //
+        $data = $request->validated() + [
+            'times'     => time()
+        ];
+
+        return response()->json(Message::create($data), 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Message $message)
+    public function messages(Message $message)
     {
-        //
-    }
+        $doc = (session('role') === 'dokter') ? 0 : 1;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Message $message)
-    {
-        //
-    }
+        $messages = Message::with('user')
+            ->where('messages.id', '>', $message->id)
+            ->where('is_dokter', $doc)
+            ->get();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateMessageRequest  $request
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateMessageRequest $request, Message $message)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Message $message)
-    {
-        //
+        return response()->json($messages);
     }
 }

@@ -13,7 +13,7 @@ class StoreMessageRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'message'       => 'required',
+            'is_dokter'     => 'required|boolean',
+            'user_id'       => 'required'
         ];
     }
 }

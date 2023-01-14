@@ -31,6 +31,12 @@ class Users extends Seeder
                 'lola sia dari',
                 'lolasiadari716@gmail.com',
                 'admin'
+            ],
+
+            [
+                'Saya Dokter!',
+                'dok@gmail.com',
+                'dokter'
             ]
         ];
 
