@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
+use App\Models\User;
 
 class MessageController extends Controller
 {
@@ -14,12 +15,13 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::with('user')->where('user_id', session('user_id'))->orWhere('is_dokter', 1)->get();
-        $isDoc = session('role') === 'dokter';
+        $messages = Message::with('user');
+        if ((session('role') !== 'dokter')) $messages = $messages->where('user_id', session('user_id'));
 
         $data = [
             'title'     => 'Obrolan | Kadar Gula Darah',
-            'messages'  => $isDoc ? Message::with('user')->get() : $messages
+            'messages'  => $messages->get(),
+            'patients'  => User::all(['id', 'name'])
         ];
 
         return view('messages.index', $data);
@@ -42,13 +44,9 @@ class MessageController extends Controller
 
     public function messages(Message $message)
     {
-        $doc = (session('role') === 'dokter') ? 0 : 1;
+        $messages = Message::with('user')->where('messages.id', '>', $message->id);
+        if ((session('role') !== 'dokter')) $messages = $messages->where('user_id', session('user_id'));
 
-        $messages = Message::with('user')
-            ->where('messages.id', '>', $message->id)
-            ->where('is_dokter', $doc)
-            ->get();
-
-        return response()->json($messages);
+        return response()->json($messages->get());
     }
 }

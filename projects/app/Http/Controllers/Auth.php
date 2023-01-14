@@ -14,7 +14,7 @@ class Auth extends Controller
      */
     public function index()
     {
-        if (session('login')) return redirect()->back();
+        if (session('login')) return redirect()->to('sugar');
 
         return view('login', ['title'   => 'Masuk | Kadar Gula Darah']);
     }

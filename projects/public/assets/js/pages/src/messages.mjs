@@ -4,7 +4,24 @@ const updateUI = data => {
     setLastMessage(data.id)
 
     const messages = gi('messages')
-    const itsMe = parseInt(messages.dataset.userId) === parseInt(data.user_id)
+
+    let color = 'success'
+    let position = 'start'
+    let messageTitle = 'Saya'
+
+    if (messages.dataset.role === 'dokter') {
+        if (!data.is_dokter) {
+            color = 'primary'
+            position = 'end'
+            messageTitle = data.user.name
+        }
+    } else {
+        if (data.is_dokter === 1) {
+            color = 'primary'
+            position = 'end'
+            messageTitle = 'Dokter'
+        }
+    }
 
     const date = new Date(data.times * 1000)
     let hours = date.getHours()
@@ -15,25 +32,16 @@ const updateUI = data => {
 
     const timeMessage = `${hours}.${minutes}`
 
-    let userInfo = itsMe ? 'Saya' : data.user.name
-
-    if (parseInt(data.is_dokter) === 1) {
-        userInfo = itsMe ? 'Saya' : `Dokter :  ${data.user.name}`
-    }
-
     messages.innerHTML +=
         /* html */
         `
         <li class="list-group-item 
-        list-group-item-${itsMe ? 'success' : 'primary'}
-        d-flex flex-column
-        align-items-${itsMe ? 'start' : 'end'}">
+            list-group-item-${color} d-flex flex-column align-items-${position}">
             <span class="text-secondary" style="font-size: 12px">
-                ${userInfo} | ${timeMessage}
+                ${`${messageTitle} | ${timeMessage}`}
             </span>
-
             ${data.message}
-        </li >
+        </li>
         `
 }
 
@@ -47,19 +55,20 @@ const saveMessage = evt => {
         body: new FormData(form)
     })
         .then(e => e.json())
-        .then(e => updateUI(e))
+        .then(e => {
+            updateUI(e)
+            gi('messageTA').value = ''
+        })
 }
 
 gi('send-message').addEventListener('click', saveMessage)
 
-const setLastMessage = id => {
-    const lastMessage = id ?? document.querySelector('[data-last-message]').dataset.lastMessage
-
-    sessionStorage.setItem('lastMessage', lastMessage)
-}
+const setLastMessage = id => sessionStorage.setItem('lastMessage', id)
 
 const getMessages = () => {
     const lastMessage = sessionStorage.getItem('lastMessage')
+
+    if (!lastMessage) return
 
     fetch(`${origin}/new/messages/${lastMessage}`)
         .then(e => e.json())
@@ -70,4 +79,7 @@ const getMessages = () => {
 
 setInterval(getMessages, 2000)
 
-document.addEventListener('DOMContentLoaded', () => setLastMessage())
+document.addEventListener('DOMContentLoaded', () => {
+    const id = document.querySelector('[data-last-message]').dataset.lastMessage
+    setLastMessage(id)
+})
