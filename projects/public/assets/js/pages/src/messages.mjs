@@ -7,7 +7,13 @@ const updateUI = data => {
     const itsMe = parseInt(messages.dataset.userId) === parseInt(data.user_id)
 
     const date = new Date(data.times * 1000)
-    const timeMessage = `${date.getHours()}.${date.getMinutes()}`
+    let hours = date.getHours()
+    if (hours < 10) hours = `0` + hours
+
+    let minutes = date.getMinutes()
+    if (minutes < 10) minutes = `0` + minutes
+
+    const timeMessage = `${hours}.${minutes}`
 
     let userInfo = itsMe ? 'Saya' : data.user.name
 
