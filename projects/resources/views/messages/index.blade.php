@@ -25,7 +25,7 @@
                     {{ $itsMe ? 'Saya' : $message->user->name }}
                     @endif
 
-                    | {{ date('h.i', $message->times) }}
+                    | {{ date('H.i', $message->times) }}
                 </span>
                 {{ $message->message }}
             </li>
